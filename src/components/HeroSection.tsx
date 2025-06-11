@@ -1,5 +1,9 @@
 
+import { useNavigate } from 'react-router-dom';
+
 const HeroSection = () => {
+    const navigate = useNavigate();
+
     return (
         <section className="bg-hot-pink border-4 border-black p-6 pt-12 md:p-12 mx-4 md:mx-8 min-h-[85vh] flex items-center">
             <div className="max-w-7xl mx-auto grid md:grid-cols-[1.45fr_0.55fr] gap-6 md:gap-8 items-center w-full">
@@ -12,7 +16,10 @@ const HeroSection = () => {
                         Leave the planning to our agent.
                     </p>
 
-                    <button className="bg-dark-blue text-neon-green font-bold text-lg md:text-xl px-6 md:px-8 py-3 md:py-4 border-4 border-black hover:bg-neon-green hover:text-dark-blue transition-colors">
+                    <button 
+                        onClick={() => navigate('/travel')}
+                        className="bg-dark-blue text-neon-green font-bold text-lg md:text-xl px-6 md:px-8 py-3 md:py-4 border-4 border-black hover:bg-neon-green hover:text-dark-blue transition-colors"
+                    >
                       Get Started
                     </button>
                 </div>
