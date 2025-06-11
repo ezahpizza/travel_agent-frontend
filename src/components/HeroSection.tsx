@@ -1,40 +1,33 @@
 
 const HeroSection = () => {
-  return (
-    <section className="bg-hot-pink border-4 border-black p-8 md:p-12 mx-4 md:mx-8">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-        {/* Left content */}
-        <div className="space-y-6 text-left">
-          <div className="font-syne">
-            <h1 className="text-4xl md:text-6xl font-bold text-black leading-tight">
-              Be the carefree friend on a random Tuesday morning.
-            </h1>
-            <p className="text-2xl md:text-3xl font-semibold text-dark-blue mt-4">
-              Leave the planning to our agents.
-            </p>
-          </div>
-          
-          <button className="bg-white text-black font-syne font-bold text-xl px-8 py-4 border-4 border-black hover:bg-neon-green transition-colors">
-            Get Started
-          </button>
-        </div>
-        
-        {/* Right illustration placeholder */}
-        <div className="bg-white border-4 border-black p-8 h-80 flex items-center justify-center">
-          <div className="text-center">
-            <div className="bg-neon-green border-2 border-black p-4 mb-4 inline-block">
-              🏝️
+    return (
+        <section className="bg-hot-pink border-4 border-black p-6 md:p-12 mx-4 md:mx-8 min-h-[85vh] flex items-center">
+            <div className="max-w-7xl mx-auto grid md:grid-cols-[1.45fr_0.55fr] gap-6 md:gap-8 items-center w-full">
+                {/* Left content */}
+                <div className="space-y-8 md:space-y-12 text-left">
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight">
+                       Be the carefree friend on a random Tuesday morning.
+                    </h1>
+                    <p className="text-2xl md:text-3xl lg:text-4xl font-bold text-dark-blue mt-4">
+                        Leave the planning to our agent.
+                    </p>
+
+                    <button className="bg-white text-black font-bold text-lg md:text-xl px-6 md:px-8 py-3 md:py-4 border-4 border-black hover:bg-neon-green transition-colors">
+                      Get Started
+                    </button>
+                </div>
+
+                {/* Right illustration */}
+                <div className="flex justify-center md:justify-end pr-0 md:pr-2">
+                    <img
+                      src="/hero_image.webp"
+                      alt="Beach Vibes Illustration"
+                      className="w-full max-w-sm md:max-w-none h-auto object-contain"
+                    />
+                </div>
             </div>
-            <p className="font-syne font-semibold text-black">
-              Beach Vibes Illustration
-              <br />
-              (Person with laptop)
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default HeroSection;

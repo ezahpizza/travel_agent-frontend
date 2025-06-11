@@ -8,14 +8,17 @@ import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white font-syne">
-      {/* Navigation */}
-      <div className="fixed top-4 left-4 z-50">
-        <Navigation />
-      </div>
+    <div className="min-h-screen bg-neon-green font-syne">
+        <div className="top-4 left-4 z-50 px-4 py-2">
+          <img src="/navite_logo.webp" alt="navite" className="h-16 w-32" />
+        </div>
+
+        <div className="fixed top-20 left-4 z-50">
+          <Navigation />
+        </div>
       
       {/* Main content */}
-      <main className="pt-20">
+      <main >
         <HeroSection />
         <SubheadingSection />
         <TestimonialsSection />
