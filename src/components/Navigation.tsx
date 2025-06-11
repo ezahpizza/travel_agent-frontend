@@ -3,56 +3,56 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 const Navigation = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navItems = [
-    { name: 'Plan', color: 'bg-brutalist-green' },
-    { name: 'Join', color: 'bg-brutalist-green' },
-    { name: 'Sign in', color: 'bg-black text-hot-pink' },
-    { name: 'Sign up', color: 'bg-hot-pink text-black' }
-  ];
+    const navItems = [
+        { name: 'Plan', color: 'bg-brutalist-green' },
+        { name: 'Join', color: 'bg-brutalist-green' },
+        { name: 'Sign in', color: 'bg-black text-hot-pink' },
+        { name: 'Sign up', color: 'bg-hot-pink text-black' }
+    ];
 
-  return (
-    <nav className="relative">
-      <div className="flex items-center gap-4"> 
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className={`font-syne font-bold text-black border-4 border-black px-3 py-2 bg-white hover:bg-neon-green transition-all duration-300 ${
-            isMenuOpen ? 'hidden md:block md:translate-x-96' : ''
-          }`}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-      
-      <div className={`fixed top-4 left-4 bg-dark-blue border-4 border-black transition-transform duration-300 z-40 ${
-        isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-      } h-[calc(100vh-2rem)] w-96 max-w-[90vw] md:max-w-sm`}>
-        <div className="p-6 md:p-8 space-y-6 h-full flex flex-col justify-center">
-          {/* Mobile close button - only visible on mobile */}
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="md:hidden absolute top-4 right-4 font-syne font-bold text-white border-2 border-white px-2 py-1 bg-transparent hover:bg-white hover:text-dark-blue transition-all duration-300"
-          >
-            <X size={20} />
-          </button>
-          
-          <img src="/navite_logo.webp"
-            alt="navite"
-            className="h-12 w-24 md:h-16 md:w-32 object-contain"/>  
-          {navItems.map((item, index) => (
-            <button
-              key={index}
-              className={`w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black ${item.color} hover:scale-105 transition-transform text-lg md:text-xl`}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              {item.name}
-            </button>
-          ))}
-        </div>
-      </div>
-    </nav>
-  );
+    return (
+        <nav className="relative">
+            <div className="flex items-center gap-4"> 
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className={`font-syne font-bold text-black border-4 border-black px-3 py-2 bg-white hover:bg-neon-green transition-all duration-300 ${
+                    isMenuOpen ? 'hidden md:block md:translate-x-96' : ''
+                  }`}
+                >
+                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </div>
+            
+            <div className={`fixed top-4 left-4 bg-dark-blue border-4 border-black transition-transform duration-300 z-40 ${
+              isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+            } h-[calc(100vh-2rem)] w-96 max-w-[90vw] md:max-w-sm`}>
+                <div className="p-6 md:p-8 space-y-6 h-full flex flex-col justify-center">
+                    {/* Mobile close button - only visible on mobile */}
+                    <button
+                      onClick={() => setIsMenuOpen(false)}
+                      className="md:hidden absolute top-4 right-4 font-syne font-bold text-white border-2 border-white px-2 py-1 bg-transparent hover:bg-white hover:text-dark-blue transition-all duration-300"
+                    >
+                      <X size={20} />
+                    </button>
+                  
+                    <img src="/navite_logo_neon.webp"
+                      alt="navite"
+                      className="h-12 w-24 md:h-16 md:w-32 object-contain"/>  
+                    {navItems.map((item, index) => (
+                      <button
+                        key={index}
+                        className={`w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black ${item.color} hover:scale-105 transition-transform text-lg md:text-xl`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </button>
+                    ))}
+                </div>
+            </div>
+        </nav>
+    );
 };
 
 export default Navigation;
