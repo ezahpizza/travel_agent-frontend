@@ -1,8 +1,8 @@
-
-import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, SignInButton } from '@clerk/clerk-react';
 import PreferencesSection from '@/components/travel/PreferencesSection';
 import TripDetailsSection from '@/components/travel/TripDetailsSection';
 import MainSection from '@/components/travel/MainSection';
+import GlobalNavbar from '@/components/GlobalNavbar';
 import { useState } from 'react';
 
 export interface TravelPreferences {
@@ -42,7 +42,7 @@ const TravelPlanning = () => {
 
     const handleGeneratePlan = () => {
         // Basic validation
-        if (!preferences.sourceCity || !preferences.destinationCity || !preferences.departureDate || !preferences.activities.trim()) {
+        if (!preferences.sourceIATA || !preferences.destinationIATA || !preferences.departureDate || !preferences.activities.trim()) {
             console.log('Missing required fields');
             return;
         }
@@ -71,19 +71,18 @@ const TravelPlanning = () => {
             </SignedOut>
 
             <SignedIn>
+                <GlobalNavbar />
+                
                 <div className="p-4">
                 {/* Header */}
                 <div className="flex justify-between items-center mb-8">
-                    <img src="/navite_logo.webp" alt="navite" className="h-16 w-32" />
-                    <div className="flex items-center gap-4">
-                        <button 
-                        onClick={handleGeneratePlan}
-                        className="bg-dark-blue text-neon-green font-bold text-lg px-6 py-3 border-4 border-black hover:bg-neon-green hover:text-black transition-colors"
-                        >
-                            Generate plan
-                        </button>
-                        <UserButton />
-                    </div>
+                    <h1 className="text-3xl font-bold text-black">Plan Your Perfect Trip</h1>
+                    <button 
+                    onClick={handleGeneratePlan}
+                    className="bg-dark-blue text-neon-green font-bold text-lg px-6 py-3 border-4 border-black hover:bg-neon-green hover:text-black transition-colors"
+                    >
+                        Generate plan
+                    </button>
                 </div>
 
                 {/* Main Layout */}

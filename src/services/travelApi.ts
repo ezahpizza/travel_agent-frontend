@@ -103,11 +103,6 @@ export const getItineraries = async (destination: string, userId: string, page: 
   return response.data;
 };
 
-export const getItinerary = async (itineraryId: string, userId: string) => {
-  const response = await api.get(`/itinerary/${itineraryId}?userid=${userId}`);
-  return response.data;
-};
-
 export const getUserItineraryHistory = async (userId: string) => {
   const response = await api.get(`/itinerary/history?userid=${userId}`);
   return response.data;

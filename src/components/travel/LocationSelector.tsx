@@ -2,58 +2,61 @@
 import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 
-// Sample IATA codes data - in production, this would come from a proper API
-const airportData = [
-  { city: 'New York', iata: 'JFK', country: 'USA' },
-  { city: 'Los Angeles', iata: 'LAX', country: 'USA' },
-  { city: 'London', iata: 'LHR', country: 'UK' },
-  { city: 'Paris', iata: 'CDG', country: 'France' },
-  { city: 'Tokyo', iata: 'NRT', country: 'Japan' },
-  { city: 'Dubai', iata: 'DXB', country: 'UAE' },
-  { city: 'Singapore', iata: 'SIN', country: 'Singapore' },
-  { city: 'Amsterdam', iata: 'AMS', country: 'Netherlands' },
-  { city: 'Frankfurt', iata: 'FRA', country: 'Germany' },
-  { city: 'Sydney', iata: 'SYD', country: 'Australia' },
-  { city: 'Toronto', iata: 'YYZ', country: 'Canada' },
-  { city: 'Mumbai', iata: 'BOM', country: 'India' },
-  { city: 'Bangkok', iata: 'BKK', country: 'Thailand' },
-  { city: 'Istanbul', iata: 'IST', country: 'Turkey' },
-  { city: 'Madrid', iata: 'MAD', country: 'Spain' },
-];
+interface AirportData {
+  iata: string;
+  airport_name: string;
+  country: string;
+}
 
 interface LocationSelectorProps {
   value: string;
   placeholder: string;
-  onSelect: (city: string, iata: string) => void;
+  onSelect: (airportName: string, iata: string) => void;
 }
 
 const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProps) => {
   const [inputValue, setInputValue] = useState(value);
-  const [suggestions, setSuggestions] = useState<typeof airportData>([]);
+  const [suggestions, setSuggestions] = useState<AirportData[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [airportData, setAirportData] = useState<AirportData[]>([]);
+
+  // Load IATA codes data on component mount
+  useEffect(() => {
+    const loadAirportData = async () => {
+      try {
+        const response = await fetch('/iata_codes.json');
+        const data = await response.json();
+        setAirportData(data);
+      } catch (error) {
+        console.error('Failed to load IATA codes:', error);
+      }
+    };
+    loadAirportData();
+  }, []);
 
   useEffect(() => {
     setInputValue(value);
   }, [value]);
 
   useEffect(() => {
-    if (inputValue.length > 0) {
+    if (inputValue.length > 0 && airportData.length > 0) {
       const filtered = airportData.filter(airport =>
-        airport.city.toLowerCase().includes(inputValue.toLowerCase()) ||
-        airport.iata.toLowerCase().includes(inputValue.toLowerCase())
+        airport.airport_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        airport.iata.toLowerCase().includes(inputValue.toLowerCase()) ||
+        airport.country.toLowerCase().includes(inputValue.toLowerCase())
       );
-      setSuggestions(filtered);
+      setSuggestions(filtered.slice(0, 10)); // Limit to 10 suggestions
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
-  }, [inputValue]);
+  }, [inputValue, airportData]);
 
-  const handleSelect = (city: string, iata: string) => {
-    setInputValue(city);
+  const handleSelect = (airportName: string, iata: string) => {
+    setInputValue(airportName);
     setShowSuggestions(false);
-    onSelect(city, iata);
+    onSelect(airportName, iata);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +64,6 @@ const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProp
   };
 
   const handleBlur = () => {
-    // Delay hiding suggestions to allow for clicks
     setTimeout(() => {
       setShowSuggestions(false);
     }, 200);
@@ -83,11 +85,11 @@ const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProp
           {suggestions.map((airport) => (
             <div
               key={airport.iata}
-              onMouseDown={(e) => e.preventDefault()} // Prevent blur before click
-              onClick={() => handleSelect(airport.city, airport.iata)}
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => handleSelect(airport.airport_name, airport.iata)}
               className="p-3 hover:bg-neon-green cursor-pointer border-b border-black last:border-b-0"
             >
-              <div className="font-bold text-black">{airport.city} ({airport.iata})</div>
+              <div className="font-bold text-black">{airport.airport_name} ({airport.iata})</div>
               <div className="text-sm text-gray-600">{airport.country}</div>
             </div>
           ))}

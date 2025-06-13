@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import LocationSelector from './LocationSelector';
 import DatePicker from './DatePicker';
@@ -37,9 +36,9 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
             <label className="block text-neon-green font-bold text-lg mb-2">Where from:</label>
               <LocationSelector
                 value={preferences.sourceCity}
-                placeholder="Enter departure city"
-                onSelect={(city, iata) => {
-                  onPreferencesChange({ ...preferences, sourceCity: city, sourceIATA: iata });
+                placeholder="Enter departure airport"
+                onSelect={(airportName, iata) => {
+                  onPreferencesChange({ ...preferences, sourceCity: airportName, sourceIATA: iata });
                   if (errors.source) setErrors(prev => ({ ...prev, source: '' }));
                 }}
               />
@@ -51,9 +50,9 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
             <label className="block text-neon-green font-bold text-lg mb-2">Where to:</label>
               <LocationSelector
                 value={preferences.destinationCity}
-                placeholder="Enter destination city"
-                onSelect={(city, iata) => {
-                  onPreferencesChange({ ...preferences, destinationCity: city, destinationIATA: iata });
+                placeholder="Enter destination airport"
+                onSelect={(airportName, iata) => {
+                  onPreferencesChange({ ...preferences, destinationCity: airportName, destinationIATA: iata });
                   if (errors.destination) setErrors(prev => ({ ...prev, destination: '' }));
                 }}
               />

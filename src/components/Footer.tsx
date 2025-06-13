@@ -1,14 +1,15 @@
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const companyLinks = [
-      { name: 'About us', color: 'bg-dark-blue text-white' },
-      { name: 'Meet the dev', color: 'bg-dark-blue text-white' },
-      { name: 'Contact us', color: 'bg-dark-blue text-white' }
+      { name: 'About us', color: 'bg-dark-blue text-white', path: '/about' },
+      { name: 'Meet the dev', color: 'bg-dark-blue text-white', path: '/meet-dev' },
+      { name: 'Contact us', color: 'bg-dark-blue text-white', path: '/contact' }
   ];
 
   const legalLinks = [
-      { name: 'Privacy Policy', color: 'bg-brut-purple text-white' },
-      { name: 'Terms of Use', color: 'bg-hot-pink text-black' }
+      { name: 'Privacy Policy', color: 'bg-brut-purple text-white', path: '/privacy' },
+      { name: 'Terms of Use', color: 'bg-hot-pink text-black', path: '/terms' }
   ];
 
   return (
@@ -34,12 +35,13 @@ const Footer = () => {
                         </h4>
                         <div className="space-y-2 md:space-y-3">
                           {companyLinks.map((link, index) => (
-                            <button
-                              key={index}
-                              className={`block w-full text-left font-semibold py-2 px-3 md:px-4 border-2 border-black ${link.color} hover:scale-105 transition-transform text-sm md:text-base`}
-                            >
+                              <Link
+                                key={index}
+                                to={link.path}
+                                className={`block w-full text-left font-semibold py-2 px-3 md:px-4 border-2 border-black ${link.color} hover:scale-105 transition-transform text-sm md:text-base`}
+                              >
                                 {link.name}
-                            </button>
+                              </Link>
                           ))}
                         </div>
                     </div>
@@ -51,12 +53,13 @@ const Footer = () => {
                         </h4>
                         <div className="space-y-2 md:space-y-3">
                           {legalLinks.map((link, index) => (
-                              <button
+                              <Link
                                 key={index}
+                                to={link.path}
                                 className={`block w-full text-left font-semibold py-2 px-3 md:px-4 border-2 border-black ${link.color} hover:scale-105 transition-transform text-sm md:text-base`}
                               >
                                 {link.name}
-                              </button>
+                              </Link>
                           ))}
                         </div>
                     </div>

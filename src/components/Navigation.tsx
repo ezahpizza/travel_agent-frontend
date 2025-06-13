@@ -1,15 +1,16 @@
 
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { SignInButton, SignUpButton, useUser } from '@clerk/clerk-react';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { isSignedIn } = useUser();
 
     const navItems = [
-        { name: 'Plan', color: 'bg-brut-green' },
-        { name: 'Join', color: 'bg-brut-green' },
-        { name: 'Sign in', color: 'bg-black text-hot-pink' },
-        { name: 'Sign up', color: 'bg-hot-pink text-black' }
+        { name: 'Plan', color: 'bg-brut-green', path: '/travel' },
+        { name: 'Join', color: 'bg-brut-green', path: '/join' },
     ];
 
     return (
@@ -29,7 +30,6 @@ const Navigation = () => {
               isMenuOpen ? 'translate-x-0' : '-translate-x-full'
             } h-[calc(100vh-2rem)] w-96 max-w-[90vw] md:max-w-sm`}>
                 <div className="p-6 md:p-8 space-y-6 h-full flex flex-col justify-center">
-                    {/* Mobile close button - only visible on mobile */}
                     <button
                       onClick={() => setIsMenuOpen(false)}
                       className="md:hidden absolute top-4 right-4 font-syne font-bold text-white border-2 border-white px-2 py-1 bg-transparent hover:bg-white hover:text-dark-blue transition-all duration-300"
@@ -40,15 +40,47 @@ const Navigation = () => {
                     <img src="/navite_logo_neon.webp"
                       alt="navite"
                       className="h-12 w-24 md:h-16 md:w-32 object-contain"/>  
+                    
                     {navItems.map((item, index) => (
-                      <button
+                      <Link
                         key={index}
-                        className={`w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black ${item.color} hover:scale-105 transition-transform text-lg md:text-xl`}
+                        to={item.path}
+                        className={`w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black ${item.color} hover:scale-105 transition-transform text-lg md:text-xl block`}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.name}
-                      </button>
+                      </Link>
                     ))}
+
+                    {!isSignedIn ? (
+                      <>
+                        <SignInButton mode="modal">
+                          <button
+                            className="w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black bg-black text-hot-pink hover:scale-105 transition-transform text-lg md:text-xl"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Sign in
+                          </button>
+                        </SignInButton>
+                        
+                        <SignUpButton mode="modal">
+                          <button
+                            className="w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black bg-hot-pink text-black hover:scale-105 transition-transform text-lg md:text-xl"
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            Sign up
+                          </button>
+                        </SignUpButton>
+                      </>
+                    ) : (
+                      <Link
+                        to="/profile"
+                        className="w-full text-left font-syne font-semibold py-3 md:py-4 px-4 md:px-6 border-2 border-black bg-brut-orange text-black hover:scale-105 transition-transform text-lg md:text-xl block"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                    )}
                 </div>
             </div>
         </nav>
