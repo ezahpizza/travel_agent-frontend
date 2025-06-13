@@ -63,14 +63,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Neo-brutalist brand colors
+				// Neo-brut brand colors
 				'neon-green': '#ccff00',
-				'hot-pink': '#ff56b3',
-				'dark-blue': '#3200ff',
-				'brutalist-purple': '#6d28d9',
-				'brutalist-orange': '#fb923c',
-				'brutalist-red': '#ef4444',
-				'brutalist-green': '#22c55e'
+				'flamingo': '#e41840',
+				'lemon-yellow': '#ecef0c',
+				'hot-pink': '#ff0054',
+				'dark-blue': '#102c99',
+				'neon-cyan': '#00ffe0',
+				'brut-purple': '#d000ff',
+				'brut-violet': '#9000ff',
+				'brut-orange': '#ff5500',
+				'brut-red': '#fe0034',
+				'brut-green': '#008247'
 			},
 			fontFamily: {
 				'syne': ['Syne', 'sans-serif'],

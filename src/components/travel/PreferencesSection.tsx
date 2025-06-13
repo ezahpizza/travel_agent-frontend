@@ -15,7 +15,7 @@ const PreferencesSection = ({ onSubmit, initialPreferences }: PreferencesSection
   };
 
   return (
-    <div className="bg-dark-blue border-4 border-black p-6">
+    <div className="bg-brut-purple border-4 border-black p-6">
       <h2 className="text-2xl font-bold text-neon-green mb-6">
         Preferences
       </h2>
@@ -42,7 +42,7 @@ const PreferencesSection = ({ onSubmit, initialPreferences }: PreferencesSection
         </div>
 
         {/* Flight Class Section */}
-        <div className="bg-hot-pink border-4 border-black p-4">
+        <div className="bg-brut-violet border-4 border-black p-4">
           <h3 className="text-xl font-bold text-neon-green mb-4">Flight Class</h3>
           <div className="space-y-2">
             {['Economy', 'Business', 'First Class'].map((option) => (
@@ -62,7 +62,7 @@ const PreferencesSection = ({ onSubmit, initialPreferences }: PreferencesSection
         </div>
 
         {/* Essentials Section */}
-        <div className="bg-brutalist-orange border-4 border-black p-4">
+        <div className="bg-brut-orange border-4 border-black p-4">
           <h3 className="text-xl font-bold text-black mb-4">Essentials</h3>
           <div className="space-y-2">
             <label className="flex items-center space-x-3">

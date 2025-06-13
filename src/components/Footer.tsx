@@ -7,7 +7,7 @@ const Footer = () => {
   ];
 
   const legalLinks = [
-      { name: 'Privacy Policy', color: 'bg-brutalist-purple text-white' },
+      { name: 'Privacy Policy', color: 'bg-brut-purple text-white' },
       { name: 'Terms of Use', color: 'bg-hot-pink text-black' }
   ];
 
@@ -18,7 +18,7 @@ const Footer = () => {
                   Look around,
               </h3>
             
-              <div className="bg-brutalist-orange border-4 border-black p-4 md:p-6 lg:p-8">
+              <div className="bg-brut-orange border-4 border-black p-4 md:p-6 lg:p-8">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
                     {/* Logo */}
                       <div className="flex items-center justify-center md:justify-start">

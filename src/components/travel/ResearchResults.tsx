@@ -1,6 +1,7 @@
-
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@clerk/clerk-react';
+import ReactMarkdown from 'react-markdown';
 import { researchDestination } from '@/services/travelApi';
 import { TravelPreferences } from '@/pages/TravelPlanning';
 
@@ -8,24 +9,58 @@ interface ResearchResultsProps {
   preferences: TravelPreferences;
 }
 
+// Custom markdown component with Tailwind styling
+const MarkdownText = ({ children }: { children: string }) => {
+  return (
+    <ReactMarkdown
+      components={{
+        strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+        em: ({ children }) => <em className="italic">{children}</em>,
+        ul: ({ children }) => <ul className="list-disc list-inside space-y-1">{children}</ul>,
+        ol: ({ children }) => <ol className="list-decimal list-inside space-y-1">{children}</ol>,
+        li: ({ children }) => <li className="ml-2">{children}</li>,
+        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+        a: ({ href, children }) => (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline hover:text-blue-800">
+            {children}
+          </a>
+        ),
+        code: ({ children }) => (
+          <code className="bg-gray-200 px-1 py-0.5 rounded text-sm font-mono">{children}</code>
+        ),
+        blockquote: ({ children }) => (
+          <blockquote className="border-l-4 border-gray-300 pl-4 italic">{children}</blockquote>
+        ),
+      }}
+    >
+      {children}
+    </ReactMarkdown>
+  );
+};
+
 const ResearchResults = ({ preferences }: ResearchResultsProps) => {
   const [isResearching, setIsResearching] = useState(false);
+  const { userId } = useAuth();
 
-  const { data: researchData, isLoading, error, refetch } = useQuery({
+  const { data: apiResponse, isLoading, error, refetch } = useQuery({
     queryKey: ['research', preferences.destinationCity, preferences.theme, preferences.duration],
     queryFn: () => researchDestination({
       destination: preferences.destinationCity,
       theme: preferences.theme,
-      activities: preferences.theme, // Using theme as activities for now
+      activities: preferences.theme, 
       num_days: preferences.duration,
-      budget: 'Standard', // Default budget
-      flight_class: 'Economy', // Default flight class
-      hotel_rating: 'Any', // Default hotel rating
+      budget: 'Standard', 
+      flight_class: 'Economy', 
+      hotel_rating: 'Any', 
       visa_required: false,
       insurance_required: false,
+      userId: userId || '',
     }),
     enabled: false,
   });
+
+  // Extract the actual research data from the API response
+  const researchData = apiResponse?.data;
 
   const handleResearch = async () => {
     if (!preferences.destinationCity || !preferences.theme) {
@@ -65,18 +100,12 @@ const ResearchResults = ({ preferences }: ResearchResultsProps) => {
       {error && (
         <div className="bg-red-100 border-4 border-red-500 p-4">
           <p className="text-red-700 font-bold">Error researching destination:</p>
-          <p className="text-red-600">{error.message}</p>
+          <div className="text-red-600"><MarkdownText>{error.message}</MarkdownText></div>
         </div>
       )}
 
       {researchData && (
         <div className="space-y-6">
-          {/* Research Summary */}
-          <div className="bg-white border-4 border-black p-6">
-            <h4 className="text-xl font-bold text-black mb-4">Research Summary</h4>
-            <p className="text-black leading-relaxed">{researchData.research_summary}</p>
-          </div>
-
           {/* Attractions */}
           {researchData.attractions && researchData.attractions.length > 0 && (
             <div className="bg-white border-4 border-black p-6">
@@ -85,22 +114,7 @@ const ResearchResults = ({ preferences }: ResearchResultsProps) => {
                 {researchData.attractions.map((attraction: string, index: number) => (
                   <li key={index} className="text-black flex items-start">
                     <span className="text-hot-pink font-bold mr-2">•</span>
-                    {attraction}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Recommendations */}
-          {researchData.recommendations && researchData.recommendations.length > 0 && (
-            <div className="bg-white border-4 border-black p-6">
-              <h4 className="text-xl font-bold text-black mb-4">Recommendations</h4>
-              <ul className="space-y-2">
-                {researchData.recommendations.map((recommendation: string, index: number) => (
-                  <li key={index} className="text-black flex items-start">
-                    <span className="text-dark-blue font-bold mr-2">→</span>
-                    {recommendation}
+                    <div className="flex-1"><MarkdownText>{attraction}</MarkdownText></div>
                   </li>
                 ))}
               </ul>
@@ -115,7 +129,7 @@ const ResearchResults = ({ preferences }: ResearchResultsProps) => {
                 {researchData.safety_tips.map((tip: string, index: number) => (
                   <li key={index} className="text-black flex items-start">
                     <span className="text-red-500 font-bold mr-2">⚠</span>
-                    {tip}
+                    <div className="flex-1"><MarkdownText>{tip}</MarkdownText></div>
                   </li>
                 ))}
               </ul>

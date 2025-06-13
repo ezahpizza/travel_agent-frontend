@@ -21,7 +21,7 @@ const DurationSlider = ({ value, onChange }: DurationSliderProps) => {
           max={30}
           min={1}
           step={1}
-          className="w-full [&_.bg-primary]:bg-brutalist-orange [&_.border-primary]:border-brutalist-orange"
+          className="w-full [&_.bg-primary]:bg-brut-orange [&_.border-primary]:border-brut-orange"
         />
       </div>
       

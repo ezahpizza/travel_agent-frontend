@@ -16,7 +16,7 @@ interface DatePickerProps {
 
 const DatePicker = ({ value, onChange, placeholder, minDate }: DatePickerProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(value ? format(value, 'MM/dd/yy') : '');
+  const [inputValue, setInputValue] = useState(value ? format(value, 'dd/MM/yy') : '');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -30,11 +30,11 @@ const DatePicker = ({ value, onChange, placeholder, minDate }: DatePickerProps) 
   };
 
   const parseManualDate = (input: string): Date | null => {
-    // Parse formats like "12/25/23", "12/25/2023", "12 25 23"
+    // Parse formats like "25/12/23", "25/12/2023", "25 12 23"
     const cleaned = input.replace(/[^\d]/g, '');
     if (cleaned.length >= 6) {
-      const month = parseInt(cleaned.slice(0, 2));
-      const day = parseInt(cleaned.slice(2, 4));
+      const day = parseInt(cleaned.slice(0, 2));
+      const month = parseInt(cleaned.slice(2, 4));
       let year = parseInt(cleaned.slice(4));
       
       if (year < 100) year += 2000;
@@ -49,7 +49,7 @@ const DatePicker = ({ value, onChange, placeholder, minDate }: DatePickerProps) 
   const handleCalendarSelect = (date: Date | undefined) => {
     if (date) {
       onChange(date);
-      setInputValue(format(date, 'MM/dd/yy'));
+      setInputValue(format(date, 'dd/MM/yy'));
       setIsOpen(false);
     }
   };
@@ -60,13 +60,13 @@ const DatePicker = ({ value, onChange, placeholder, minDate }: DatePickerProps) 
         value={inputValue}
         onChange={handleInputChange}
         placeholder={placeholder}
-        className="flex-1 border-4 border-black bg-white text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue"
+        className="flex-1 border-4 border-black bg-brut-orange text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue"
       />
       
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
           <button className="bg-white border-4 border-black p-3 hover:bg-neon-green transition-colors">
-            <CalendarIcon className="h-6 w-6 text-black" />
+            <CalendarIcon className="h-4 w-4 text-black" />
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0 border-4 border-black" align="start">

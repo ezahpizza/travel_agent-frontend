@@ -24,7 +24,7 @@ const MainSection = ({ preferences, isSubmitted }: MainSectionProps) => {
   ];
 
   return (
-    <div className="bg-white border-4 border-black">
+    <div className="bg-lemon-yellow border-4 border-black">
       {/* Tab Navigation */}
       <div className="flex border-b-4 border-black">
         {tabs.map((tab) => (
@@ -34,7 +34,7 @@ const MainSection = ({ preferences, isSubmitted }: MainSectionProps) => {
             className={`flex-1 py-4 px-4 font-bold text-lg border-r-4 border-black last:border-r-0 transition-colors ${
               activeTab === tab.id
                 ? 'bg-dark-blue text-white'
-                : 'bg-white text-black hover:bg-neon-green'
+                : 'bg-flamingo text-black hover:bg-brut-orange'
             }`}
           >
             <span className="mr-2">{tab.icon}</span>

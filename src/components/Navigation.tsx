@@ -6,8 +6,8 @@ const Navigation = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const navItems = [
-        { name: 'Plan', color: 'bg-brutalist-green' },
-        { name: 'Join', color: 'bg-brutalist-green' },
+        { name: 'Plan', color: 'bg-brut-green' },
+        { name: 'Join', color: 'bg-brut-green' },
         { name: 'Sign in', color: 'bg-black text-hot-pink' },
         { name: 'Sign up', color: 'bg-hot-pink text-black' }
     ];

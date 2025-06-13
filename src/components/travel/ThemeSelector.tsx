@@ -22,7 +22,7 @@ interface ThemeSelectorProps {
 const ThemeSelector = ({ value, onChange }: ThemeSelectorProps) => {
   return (
     <Select value={value} onValueChange={onChange}>
-      <SelectTrigger className="border-4 border-black bg-white text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue">
+      <SelectTrigger className="border-4 border-black bg-brut-red text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue">
         <SelectValue />
       </SelectTrigger>
       <SelectContent className="border-4 border-black bg-white">

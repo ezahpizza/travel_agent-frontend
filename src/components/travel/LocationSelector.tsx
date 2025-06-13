@@ -75,7 +75,7 @@ const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProp
         onBlur={handleBlur}
         onFocus={() => inputValue.length > 0 && setShowSuggestions(true)}
         placeholder={placeholder}
-        className="border-4 border-black bg-white text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue"
+        className="border-4 border-black bg-neon-cyan text-black font-bold text-lg h-12 focus:ring-0 focus:border-dark-blue"
       />
       
       {showSuggestions && suggestions.length > 0 && (

@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@clerk/clerk-react';
 import { searchHotelsRestaurants } from '@/services/travelApi';
 import { TravelPreferences } from '@/pages/TravelPlanning';
 
@@ -10,6 +11,8 @@ interface HotelResultsProps {
 
 const HotelResults = ({ preferences }: HotelResultsProps) => {
   const [isSearching, setIsSearching] = useState(false);
+  const { userId } = useAuth();
+
 
   const { data: hotelData, isLoading, error, refetch } = useQuery({
     queryKey: ['hotels', preferences.destinationCity, preferences.theme],
@@ -19,6 +22,7 @@ const HotelResults = ({ preferences }: HotelResultsProps) => {
       activity_preferences: preferences.theme,
       hotel_rating: 'Any',
       budget: 'Standard',
+      userId: userId || '',
     }),
     enabled: false,
   });

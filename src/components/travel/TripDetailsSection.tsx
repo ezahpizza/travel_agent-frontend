@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LocationSelector from './LocationSelector';
 import DatePicker from './DatePicker';
 import DurationSlider from './DurationSlider';
@@ -14,8 +14,17 @@ interface TripDetailsSectionProps {
 const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSectionProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Calculate return date whenever departure date or duration changes
+  useEffect(() => {
+    if (preferences.departureDate && preferences.duration) {
+      const returnDate = new Date(preferences.departureDate);
+      returnDate.setDate(returnDate.getDate() + preferences.duration);
+      onPreferencesChange({ ...preferences, returnDate });
+    }
+  }, [preferences.departureDate, preferences.duration]);
+
   return (
-    <div className="bg-neon-green border-4 border-black p-6">
+    <div className="bg-brut-green border-4 border-black p-6">
       <h2 className="text-2xl font-bold text-black mb-6">
         Getting the basics out of the way -
       </h2>
@@ -26,7 +35,6 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
           {/* Where from */}
           <div>
             <label className="block text-neon-green font-bold text-lg mb-2">Where from:</label>
-            <div className="bg-neon-green border-2 border-black p-3">
               <LocationSelector
                 value={preferences.sourceCity}
                 placeholder="Enter departure city"
@@ -35,14 +43,12 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
                   if (errors.source) setErrors(prev => ({ ...prev, source: '' }));
                 }}
               />
-            </div>
             {errors.source && <p className="text-red-500 text-sm mt-1">{errors.source}</p>}
           </div>
 
           {/* Where to */}
           <div>
             <label className="block text-neon-green font-bold text-lg mb-2">Where to:</label>
-            <div className="bg-neon-green border-2 border-black p-3">
               <LocationSelector
                 value={preferences.destinationCity}
                 placeholder="Enter destination city"
@@ -51,7 +57,6 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
                   if (errors.destination) setErrors(prev => ({ ...prev, destination: '' }));
                 }}
               />
-            </div>
             {errors.destination && <p className="text-red-500 text-sm mt-1">{errors.destination}</p>}
           </div>
         </div>
@@ -60,28 +65,24 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
           {/* Date */}
           <div>
             <label className="block text-neon-green font-bold text-lg mb-2">Date:</label>
-            <div className="bg-brutalist-orange border-2 border-black p-3">
               <DatePicker
                 value={preferences.departureDate}
                 onChange={(date) => {
                   onPreferencesChange({ ...preferences, departureDate: date });
                   if (errors.departureDate) setErrors(prev => ({ ...prev, departureDate: '' }));
                 }}
-                placeholder="mm/dd/yy"
+                placeholder="dd/mm/yy"
               />
-            </div>
             {errors.departureDate && <p className="text-red-500 text-sm mt-1">{errors.departureDate}</p>}
           </div>
 
           {/* Duration */}
           <div>
             <label className="block text-neon-green font-bold text-lg mb-2">Duration:</label>
-            <div className="bg-dark-blue border-2 border-black p-3">
               <DurationSlider
                 value={preferences.duration}
                 onChange={(duration) => onPreferencesChange({ ...preferences, duration })}
               />
-            </div>
           </div>
         </div>
       </div>
@@ -89,7 +90,6 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
       {/* Theme Section */}
       <div className="mb-6">
         <h3 className="text-xl font-bold text-black mb-4">got an occasion or a theme in mind?</h3>
-        <div className="bg-red-500 border-4 border-black p-3">
           <ThemeSelector
             value={preferences.theme}
             onChange={(theme) => {
@@ -97,7 +97,6 @@ const TripDetailsSection = ({ preferences, onPreferencesChange }: TripDetailsSec
               if (errors.theme) setErrors(prev => ({ ...prev, theme: '' }));
             }}
           />
-        </div>
         {errors.theme && <p className="text-red-500 text-sm mt-1">{errors.theme}</p>}
       </div>
 

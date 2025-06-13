@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
@@ -16,13 +15,19 @@ export const searchFlights = async (data: {
   destination: string;
   departure_date: string;
   return_date: string;
+  userId: string;
 }) => {
-  const response = await api.post('/flights/search', data);
+  const response = await api.post('/flights/search', {
+    ...data,
+    userid: data.userId
+  });
+  
+  console.log('Flight API Response:', response.data); // Add for debugging
   return response.data;
 };
 
-export const getFlightHistory = async () => {
-  const response = await api.get('/flights/search/history');
+export const getFlightHistory = async (userId: string) => {
+  const response = await api.get(`/flights/search/history?userid=${userId}`);
   return response.data;
 };
 
@@ -37,13 +42,17 @@ export const researchDestination = async (data: {
   hotel_rating: string;
   visa_required: boolean;
   insurance_required: boolean;
+  userId: string;
 }) => {
-  const response = await api.post('/research/destination', data);
+  const response = await api.post('/research/destination', {
+    ...data,
+    userid: String(data.userId)
+  });
   return response.data;
 };
 
-export const getResearchHistory = async (destination: string) => {
-  const response = await api.get(`/research/destination/${destination}/history`);
+export const getResearchHistory = async (destination: string, userId: string) => {
+  const response = await api.get(`/research/destination/${destination}/history?userid=${String(userId)}`);
   return response.data;
 };
 
@@ -54,13 +63,18 @@ export const searchHotelsRestaurants = async (data: {
   activity_preferences: string;
   hotel_rating: string;
   budget: string;
+  userId: string;
 }) => {
-  const response = await api.post('/hotels-restaurants/search', data);
-  return response.data;
+  const response = await api.post('/hotels-restaurants/search', {
+    ...data,
+    userid: data.userId
+  });
+  // Extract the actual data from the API response wrapper
+  return response.data.data || response.data;
 };
 
-export const getHotelRestaurantHistory = async (destination: string) => {
-  const response = await api.get(`/hotels-restaurants/destination/${destination}/history`);
+export const getHotelRestaurantHistory = async (destination: string, userId: string) => {
+  const response = await api.get(`/hotels-restaurants/destination/${destination}/history?userid=${userId}`);
   return response.data;
 };
 
@@ -75,20 +89,26 @@ export const generateItinerary = async (data: {
   hotel_rating: string;
   visa_required: boolean;
   insurance_required: boolean;
-  research_summary: string;
-  selected_flights: any[];
-  hotel_restaurant_summary: string;
+  userId: string;
 }) => {
-  const response = await api.post('/itinerary/generate', data);
+  const response = await api.post('/itinerary/generate', {
+    ...data,
+    userid: data.userId
+  });
   return response.data;
 };
 
-export const getItineraries = async (destination: string, page: number = 1, limit: number = 10) => {
-  const response = await api.get(`/itinerary/destination/${destination}?page=${page}&limit=${limit}`);
+export const getItineraries = async (destination: string, userId: string, page: number = 1, limit: number = 10) => {
+  const response = await api.get(`/itinerary/destination/${destination}?page=${page}&limit=${limit}&userid=${userId}`);
   return response.data;
 };
 
-export const getItinerary = async (itineraryId: string) => {
-  const response = await api.get(`/itinerary/${itineraryId}`);
+export const getItinerary = async (itineraryId: string, userId: string) => {
+  const response = await api.get(`/itinerary/${itineraryId}?userid=${userId}`);
+  return response.data;
+};
+
+export const getUserItineraryHistory = async (userId: string) => {
+  const response = await api.get(`/itinerary/history?userid=${userId}`);
   return response.data;
 };

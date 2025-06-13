@@ -1,6 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@clerk/clerk-react';
 import { searchFlights } from '@/services/travelApi';
 import { TravelPreferences } from '@/pages/TravelPlanning';
 import { format } from 'date-fns';
@@ -11,6 +12,7 @@ interface FlightResultsProps {
 
 const FlightResults = ({ preferences }: FlightResultsProps) => {
   const [isSearching, setIsSearching] = useState(false);
+  const { userId } = useAuth();
 
   const { data: flightData, isLoading, error, refetch } = useQuery({
     queryKey: ['flights', preferences.sourceIATA, preferences.destinationIATA, preferences.departureDate, preferences.returnDate],
@@ -19,6 +21,7 @@ const FlightResults = ({ preferences }: FlightResultsProps) => {
       destination: preferences.destinationIATA,
       departure_date: format(preferences.departureDate!, 'yyyy-MM-dd'),
       return_date: format(preferences.returnDate!, 'yyyy-MM-dd'),
+      userId: userId || '',
     }),
     enabled: false, // Don't auto-fetch
   });
@@ -65,9 +68,9 @@ const FlightResults = ({ preferences }: FlightResultsProps) => {
       {flightData && (
         <div className="space-y-4">
           <h4 className="text-xl font-bold text-black">Available Flights:</h4>
-          {flightData.flights && flightData.flights.length > 0 ? (
+          {flightData.data && flightData.data.length > 0 ? (
             <div className="space-y-4">
-              {flightData.flights.map((flight: any, index: number) => (
+              {flightData.data.map((flight: any, index: number) => (
                 <div key={index} className="bg-white border-4 border-black p-4">
                   <div className="flex justify-between items-center">
                     <div>
@@ -92,6 +95,7 @@ const FlightResults = ({ preferences }: FlightResultsProps) => {
           )}
         </div>
       )}
+
     </div>
   );
 };

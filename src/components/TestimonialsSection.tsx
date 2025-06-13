@@ -3,19 +3,19 @@ const TestimonialsSection = () => {
     const testimonials = [
             {
                 name: 'John Doe',
-                bg: 'bg-brutalist-green',
+                bg: 'bg-brut-green',
                 textColor: 'text-black',
                 text: 'This is a fantastic product. Really impressed with the design and usability.'
             },
             {
                 name: 'Jane Smith',
-                bg: 'bg-brutalist-purple',
+                bg: 'bg-brut-purple',
                 textColor: 'text-white',
                 text: 'Amazing experience! Support was super helpful and the results are great.'
             },
             {
                 name: 'Alice Johnson',
-                bg: 'bg-brutalist-red',
+                bg: 'bg-brut-red',
                 textColor: 'text-black',
                 text: 'High quality and very reliable. I would recommend it to anyone looking for a robust solution.'
             }
