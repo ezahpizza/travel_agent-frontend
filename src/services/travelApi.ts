@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+console.log('API_BASE_URL configured as:', API_BASE_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -8,6 +10,77 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Add response interceptor to handle 429 errors globally
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 429) {
+      // This will be caught by the calling component
+      throw new Error('Free plan limit reached (15 POST calls/month). Please upgrade to Travel Master for unlimited access.');
+    }
+    throw error;
+  }
+);
+
+// Subscription API calls
+export const getSubscriptionStatus = async (userId: string) => {
+  try {
+    const url = `/subscription/status?userid=${userId}`;
+    console.log('Making request to:', `${API_BASE_URL}${url}`);
+    const response = await api.get(url);
+    console.log('Subscription status response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error in getSubscriptionStatus:', error);
+    console.error('Full URL attempted:', `${API_BASE_URL}/subscription/status?userid=${userId}`);
+    if (axios.isAxiosError(error)) {
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+    }
+    throw error;
+  }
+};
+
+export const createStripeSession = async (data: {
+  userId: string;
+  successUrl: string;
+  cancelUrl: string;
+}) => {
+  try {
+    console.log('Creating Stripe session with data:', data);
+    const response = await api.post('/subscription/create-session', {
+      userid: data.userId,
+      success_url: data.successUrl,
+      cancel_url: data.cancelUrl,
+    });
+    console.log('Stripe session API response:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error in createStripeSession:', error);
+    if (axios.isAxiosError(error)) {
+      console.error('Response status:', error.response?.status);
+      console.error('Response data:', error.response?.data);
+    }
+    throw error;
+  }
+};
+
+export const verifyStripePayment = async (data: {
+  userId: string;
+  sessionId: string;
+}) => {
+  try {
+    const response = await api.post('/subscription/verify-payment', {
+      userid: data.userId,
+      session_id: data.sessionId,
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error in verifyStripePayment:', error);
+    throw error;
+  }
+};
 
 // Flight API calls
 export const searchFlights = async (data: {
@@ -22,7 +95,7 @@ export const searchFlights = async (data: {
     userid: data.userId
   });
   
-  console.log('Flight API Response:', response.data); // Add for debugging
+  console.log('Flight API Response:', response.data);
   return response.data;
 };
 
@@ -69,7 +142,6 @@ export const searchHotelsRestaurants = async (data: {
     ...data,
     userid: data.userId
   });
-  // Extract the actual data from the API response wrapper
   return response.data.data || response.data;
 };
 
@@ -98,12 +170,17 @@ export const generateItinerary = async (data: {
   return response.data;
 };
 
-export const getItineraries = async (destination: string, userId: string, page: number = 1, limit: number = 10) => {
-  const response = await api.get(`/itinerary/destination/${destination}?page=${page}&limit=${limit}&userid=${userId}`);
+export const getUserItineraryHistory = async (userId: string) => {
+  const response = await api.get(`/itinerary/history?userid=${userId}`);
   return response.data;
 };
 
-export const getUserItineraryHistory = async (userId: string) => {
-  const response = await api.get(`/itinerary/history?userid=${userId}`);
+export const getItineraryById = async (itineraryId: string, userId: string) => {
+  const response = await api.get(`/itinerary/${itineraryId}?userid=${userId}`);
+  return response.data;
+};
+
+export const deleteItinerary = async (itineraryId: string, userId: string) => {
+  const response = await api.delete(`/itinerary/${itineraryId}?userid=${userId}`);
   return response.data;
 };

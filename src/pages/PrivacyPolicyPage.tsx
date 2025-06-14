@@ -6,10 +6,10 @@ const PrivacyPolicyPage = () => {
         <div className="text-center mb-12">
           <img src="/navite_logo.webp" alt="navite" className="h-20 w-40 mx-auto mb-6" />
           <h1 className="text-4xl font-bold text-black mb-4">Privacy Policy</h1>
-          <p className="text-black">Last updated: December 2024</p>
+          <p className="text-black">Last updated: June 2025</p>
         </div>
 
-        <div className="bg-white border-4 border-black p-8 space-y-8">
+        <div className="bg-turquoise border-4 border-black p-8 space-y-8">
           <section>
             <h2 className="text-2xl font-bold text-black mb-4">Information We Collect</h2>
             <p className="text-black mb-4">We collect information you provide directly to us, such as:</p>

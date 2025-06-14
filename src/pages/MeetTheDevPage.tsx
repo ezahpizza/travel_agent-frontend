@@ -12,7 +12,7 @@ const MeetTheDevPage = () => {
           <div className="flex flex-col md:flex-row gap-8 items-center">
             <div className="flex-shrink-0">
               <img 
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" 
+                src="/Prateek-Mohapatra.webp" 
                 alt="Developer" 
                 className="w-64 h-64 border-4 border-black object-cover"
               />
@@ -20,25 +20,33 @@ const MeetTheDevPage = () => {
             <div className="flex-1">
               <h2 className="text-3xl font-bold text-black mb-4">John Developer</h2>
               <p className="text-black text-lg leading-relaxed mb-6">
-                A passionate full-stack developer with a love for travel and technology. With over 5 years of experience 
-                in building user-centric applications, I created Navite to solve the travel planning problems I faced as 
-                a frequent traveler.
+                      Part full-stack engineer, part machine learning whisperer, and full-time caffeine-drowned code sorcerer, I'm the creator of Navite, your AI-powered travel planner that's smarter than your average itinerary. I tend (try) to live at the intersection of AI and intuitive user experiences. </p>
+              <p className="text-black text-lg leading-relaxed mb-6">
+
+                      Currently a B.Tech CSE student at ITER, SOA University (with a GPA so high it practically auto-deploys itself), I've built and scaled everything from mental health assistants to fuzzy decision trees (yes, they exist — and yes, I helped invent one).
+             </p>
+              <p className="text-black text-lg leading-relaxed mb-6">
+
+                      I've trained models, tested limits, pushed pixels, and probably broken a few keyboards along the way — but hey, that's just the cost of innovation. If you're ever wondering where tech meets creativity, and Python meets a passport, that's where you'll find me — building the future, one API call at a time.
               </p>
             </div>
           </div>
         </div>
 
         <div className="space-y-8">
-          <div className="bg-neon-green border-4 border-black p-8">
+          <div className="bg-turquoise border-4 border-black p-8">
             <h2 className="text-2xl font-bold text-black mb-4">My Mission</h2>
             <p className="text-black text-lg leading-relaxed">
-              To leverage cutting-edge AI technology to make travel planning effortless and enjoyable for everyone. 
+              To engineer intelligent, human-centric systems that bridge real-world needs with the power of AI — crafting tools that not only solve problems, but make technology feel intuitive, accessible, and just a little bit magical.
               I believe that the journey begins with the planning, and it should be just as exciting as the destination itself.
             </p>
           </div>
 
           <div className="bg-hot-pink border-4 border-black p-8">
             <h2 className="text-2xl font-bold text-black mb-4">My Vision</h2>
+            <p className="text-black text-lg leading-relaxed mb-4">
+              To shape a future where AI doesn't just automate — it empowers. Where technology becomes a seamless co-pilot in everyday life, helping people make smarter decisions, travel further, and live more meaningfully through intelligent, beautifully integrated systems.
+            </p>
             <p className="text-black text-lg leading-relaxed">
               To build a platform that not only simplifies travel planning but also inspires people to explore new destinations 
               and create unforgettable memories. I envision Navite becoming the go-to platform for intelligent travel solutions worldwide.
@@ -46,26 +54,38 @@ const MeetTheDevPage = () => {
           </div>
 
           <div className="bg-lemon-yellow border-4 border-black p-8">
-            <h2 className="text-2xl font-bold text-black mb-4">Tech Stack & Expertise</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-bold text-black mb-2">Frontend</h3>
-                <ul className="text-black space-y-1">
-                  <li>• React & TypeScript</li>
-                  <li>• Tailwind CSS</li>
-                  <li>• Modern UI/UX Design</li>
-                </ul>
+                <h2 className="text-2xl font-bold text-black mb-4">Tech Stack & Expertise</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="font-bold text-black mb-2">Frontend</h3>
+                    <ul className="text-black space-y-1">
+                      <li>• React & TypeScript</li>
+                      <li>• Tailwind CSS</li>
+                      <li>• Streamlit (AI Prototypes)</li>
+                      <li>• Responsive UI/UX Design</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-black mb-2">Backend</h3>
+                    <ul className="text-black space-y-1">
+                      <li>• Python (FastAPI, Flask)</li>
+                      <li>• AI/ML Integration (PyTorch, Transformers)</li>
+                      <li>• Database Design (MongoDB, PostgreSQL)</li>
+                      <li>• CI/CD (Docker, GitHub Actions)</li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="mt-6">
+                  <h3 className="font-bold text-black mb-2">Specialized Skills</h3>
+                  <ul className="text-black space-y-1">
+                    <li>• Large Language Models & LangChain</li>
+                    <li>• MLOps & Model Deployment</li>
+                    <li>• Web Scraping & ETL Pipelines</li>
+                    <li>• Big Data (PySpark, Kafka)</li>
+                  </ul>
+                </div>
               </div>
-              <div>
-                <h3 className="font-bold text-black mb-2">Backend</h3>
-                <ul className="text-black space-y-1">
-                  <li>• Python & FastAPI</li>
-                  <li>• AI/ML Integration</li>
-                  <li>• Database Design</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+
 
           <div className="text-center">
             <a 

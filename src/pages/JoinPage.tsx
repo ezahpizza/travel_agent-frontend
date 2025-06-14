@@ -6,8 +6,8 @@ const JoinPage = () => {
   const plans = [
     {
       name: 'Basic Explorer',
-      priceINR: '₹299',
-      priceUSD: '$3.99',
+      priceINR: '₹0',
+      priceUSD: '$0',
       features: [
         '5 flight searches per month',
         'Basic destination research',
@@ -16,38 +16,24 @@ const JoinPage = () => {
       ],
       color: 'bg-neon-green'
     },
-    {
-      name: 'Adventure Seeker',
-      priceINR: '₹599',
-      priceUSD: '$7.99',
-      features: [
-        '25 flight searches per month',
-        'Detailed destination insights',
-        'Premium hotel & restaurant recommendations',
-        'Custom itinerary generation',
-        'Priority support'
-      ],
-      color: 'bg-hot-pink',
-      popular: true
-    },
+
     {
       name: 'Travel Master',
-      priceINR: '₹999',
-      priceUSD: '$12.99',
+      priceINR: '₹20',
+      priceUSD: '$1.99',
       features: [
         'Unlimited flight searches',
         'AI-powered travel insights',
         'Exclusive venue recommendations',
         'Advanced itinerary customization',
         '24/7 premium support',
-        'Travel insurance assistance'
       ],
       color: 'bg-brut-orange'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-neon-cyan font-syne">
+    <div className="min-h-screen bg-brut-violet font-syne">
       <SignedOut>
         <div className="min-h-screen flex items-center justify-center">
           <div className="bg-white border-4 border-black p-8 text-center">
@@ -72,14 +58,9 @@ const JoinPage = () => {
               <p className="text-xl text-black">Unlock the perfect travel experience with our subscription plans</p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {plans.map((plan, index) => (
                 <div key={index} className={`${plan.color} border-4 border-black p-6 relative`}>
-                  {plan.popular && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-dark-blue text-white px-4 py-2 border-4 border-black font-bold">
-                      MOST POPULAR
-                    </div>
-                  )}
                   
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-black mb-2">{plan.name}</h3>
@@ -104,9 +85,12 @@ const JoinPage = () => {
                     ))}
                   </ul>
 
-                  <button className="w-full bg-dark-blue text-white font-bold py-4 px-6 border-4 border-black hover:bg-black transition-colors">
-                    Choose Plan
-                  </button>
+                  {plan.name !== 'Basic Explorer' && (
+                      <button className="w-full bg-dark-blue text-white font-bold py-4 px-6 border-4 border-black hover:bg-black transition-colors">
+                        Choose Plan
+                      </button>
+                    )}
+
                 </div>
               ))}
             </div>

@@ -1,11 +1,11 @@
 
 const AboutUsPage = () => {
   return (
-    <div className="min-h-screen bg-neon-green font-syne p-8">
+    <div className="min-h-screen bg-turquoise-darkblue font-syne p-8">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <img src="/navite_logo.webp" alt="navite" className="h-20 w-40 mx-auto mb-6" />
-          <h1 className="text-4xl font-bold text-black mb-4">About Navite</h1>
+          <img src="/navite_logo_white.webp" alt="navite" className="h-20 w-40 mx-auto mb-6" />
+          <h1 className="text-4xl font-bold text-turquoise mb-4">About Navite</h1>
         </div>
 
         <div className="space-y-8">
@@ -55,7 +55,7 @@ const AboutUsPage = () => {
           <div className="text-center">
             <a 
               href="/"
-              className="bg-dark-blue text-white font-bold text-lg px-8 py-4 border-4 border-black hover:bg-black transition-colors inline-block"
+              className="bg-dark-blue text-white font-bold text-lg px-8 py-4 border-4 border-black hover:bg-brut-violet transition-colors inline-block"
             >
               Back to Home
             </a>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 const ContactSection = () => {
     return (
@@ -7,9 +8,11 @@ const ContactSection = () => {
                     Reach out to us with your questions
                 </h2>
 
-                <button className="bg-brut-orange text-black font-bold text-lg md:text-xl lg:text-2xl px-6 md:px-8 py-3 md:py-4 border-4 border-black hover:bg-white transition-colors">
-                    Contact us
-                </button>
+                <Link to="/contact">
+                    <button className="bg-brut-orange text-black font-bold text-lg md:text-xl lg:text-2xl px-6 md:px-8 py-3 md:py-4 border-4 border-black hover:bg-white transition-colors">
+                        Contact us
+                    </button>
+                </Link>
             </div>
         </section>
     );

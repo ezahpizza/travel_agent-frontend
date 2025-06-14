@@ -4,6 +4,7 @@ import { useAuth } from '@clerk/clerk-react';
 import ReactMarkdown from 'react-markdown';
 import { generateItinerary } from '@/services/travelApi';
 import { TravelPreferences } from '@/pages/TravelPlanning';
+import PaywallModal from '@/components/subscription/PaywallModal';
 
 interface ItineraryResultsProps {
   preferences: TravelPreferences;
@@ -40,35 +41,43 @@ const MarkdownText = ({ children }: { children: string }) => {
 
 const ItineraryResults = ({ preferences }: ItineraryResultsProps) => {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
   const { userId } = useAuth();
 
   const { data: itineraryData, isLoading, error, refetch } = useQuery({
-  queryKey: ['itinerary', preferences.destinationCity, preferences.theme, preferences.duration],
-  queryFn: async () => {
-    const response = await generateItinerary({
-      destination: preferences.destinationCity,
-      theme: preferences.theme,
-      activities: preferences.theme,
-      num_days: preferences.duration,
-      budget: 'Standard',
-      flight_class: 'Economy',
-      hotel_rating: 'Any',
-      visa_required: false,
-      insurance_required: false,
-      userId: userId || '',
-    });
-    return response.data;
-  },
-  enabled: false,
-});
+    queryKey: ['itinerary', preferences.destinationCity, preferences.theme, preferences.duration],
+    queryFn: async () => {
+      const response = await generateItinerary({
+        destination: preferences.destinationCity,
+        theme: preferences.theme,
+        activities: preferences.theme,
+        num_days: preferences.duration,
+        budget: 'Standard',
+        flight_class: 'Economy',
+        hotel_rating: 'Any',
+        visa_required: false,
+        insurance_required: false,
+        userId: userId || '',
+      });
+      return response.data;
+    },
+    enabled: false,
+  });
 
   const handleGenerate = async () => {
     if (!preferences.destinationCity || !preferences.theme) {
       return;
     }
     setIsGenerating(true);
-    await refetch();
-    setIsGenerating(false);
+    try {
+      await refetch();
+    } catch (error: any) {
+      if (error.message.includes('Free plan limit')) {
+        setShowPaywallModal(true);
+      }
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   return (
@@ -211,6 +220,11 @@ const ItineraryResults = ({ preferences }: ItineraryResultsProps) => {
           )}
         </div>
       )}
+
+      <PaywallModal
+        isOpen={showPaywallModal}
+        onClose={() => setShowPaywallModal(false)}
+      />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 
 interface AirportData {
   iata: string;
-  airport_name: string;
+  airport: string;
   country: string;
 }
 
@@ -41,7 +41,7 @@ const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProp
   useEffect(() => {
     if (inputValue.length > 0 && airportData.length > 0) {
       const filtered = airportData.filter(airport =>
-        airport.airport_name.toLowerCase().includes(inputValue.toLowerCase()) ||
+        airport.airport.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.iata.toLowerCase().includes(inputValue.toLowerCase()) ||
         airport.country.toLowerCase().includes(inputValue.toLowerCase())
       );
@@ -86,10 +86,10 @@ const LocationSelector = ({ value, placeholder, onSelect }: LocationSelectorProp
             <div
               key={airport.iata}
               onMouseDown={(e) => e.preventDefault()}
-              onClick={() => handleSelect(airport.airport_name, airport.iata)}
+              onClick={() => handleSelect(airport.airport, airport.iata)}
               className="p-3 hover:bg-neon-green cursor-pointer border-b border-black last:border-b-0"
             >
-              <div className="font-bold text-black">{airport.airport_name} ({airport.iata})</div>
+              <div className="font-bold text-black">{airport.airport} ({airport.iata})</div>
               <div className="text-sm text-gray-600">{airport.country}</div>
             </div>
           ))}

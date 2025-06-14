@@ -66,6 +66,8 @@ export default {
 				// Neo-brut brand colors
 				'neon-green': '#ccff00',
 				'flamingo': '#e41840',
+				'turquoise': '#a0e8c5',
+				'turquoise-darkblue': '#00284c',
 				'lemon-yellow': '#ecef0c',
 				'hot-pink': '#ff0054',
 				'dark-blue': '#102c99',

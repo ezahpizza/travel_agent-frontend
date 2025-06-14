@@ -1,25 +1,61 @@
+
 import { useState } from 'react';
 import { SignedIn, SignedOut, SignInButton, useAuth } from '@clerk/clerk-react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { 
   getFlightHistory, 
   getResearchHistory, 
   getHotelRestaurantHistory, 
-  getUserItineraryHistory 
+  getUserItineraryHistory,
+  getItineraryById,
+  deleteItinerary
 } from '@/services/travelApi';
 import { format } from 'date-fns';
+import { useToast } from '@/hooks/use-toast';
 import GlobalNavbar from '@/components/GlobalNavbar';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import ProfileTabs from '@/components/profile/ProfileTabs';
 import FlightHistorySection from '@/components/profile/FlightHistorySection';
 import DestinationSelector from '@/components/profile/DestinationSelector';
+import ItineraryModal from '@/components/profile/ItineraryModal';
+import SubscriptionWidget from '@/components/subscription/SubscriptionWidget';
+import PaywallModal from '@/components/subscription/PaywallModal';
 
 type HistorySection = 'flights' | 'research' | 'hotels' | 'itineraries';
 
 const UserProfile = () => {
   const { userId } = useAuth();
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [activeSection, setActiveSection] = useState<HistorySection>('flights');
   const [selectedDestination, setSelectedDestination] = useState<string>('');
+  const [selectedItinerary, setSelectedItinerary] = useState<any>(null);
+  const [showItineraryModal, setShowItineraryModal] = useState(false);
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
+
+  // Delete itinerary mutation
+  const deleteItineraryMutation = useMutation({
+    mutationFn: ({ itineraryId, userId }: { itineraryId: string; userId: string }) =>
+      deleteItinerary(itineraryId, userId),
+    onSuccess: () => {
+      toast({
+        title: "Success",
+        description: "Itinerary deleted successfully",
+      });
+      queryClient.invalidateQueries({ queryKey: ['itineraryHistory'] });
+    },
+    onError: (error: any) => {
+      if (error.message.includes('Free plan limit')) {
+        setShowPaywallModal(true);
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to delete itinerary",
+          variant: "destructive",
+        });
+      }
+    },
+  });
 
   // Flight history query
   const { data: flightHistory, isLoading: flightLoading } = useQuery({
@@ -59,6 +95,26 @@ const UserProfile = () => {
     { id: 'itineraries' as HistorySection, label: 'Itineraries', icon: '📅' },
   ];
 
+  const handleDeleteItinerary = (itineraryId: string) => {
+    if (!userId) return;
+    
+    if (confirm('Are you sure you want to delete this itinerary?')) {
+      deleteItineraryMutation.mutate({ itineraryId, userId });
+    }
+  };
+
+  const handleViewItinerary = async (itineraryId: string) => {
+    try {
+      const response = await getItineraryById(itineraryId, userId || '');
+      if (response.success) {
+        setSelectedItinerary(response.data);
+        setShowItineraryModal(true);
+      }
+    } catch (error) {
+      console.error('Error fetching itinerary:', error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-hot-pink font-syne">
       <SignedOut>
@@ -80,12 +136,13 @@ const UserProfile = () => {
         
         <div className="p-4">
           <ProfileHeader />
+          <SubscriptionWidget />
 
-          <div className="bg-lemon-yellow border-4 border-black mb-6">
+          <div className="bg-brut-purple border-4 border-black mb-6">
             <ProfileTabs 
               sections={sections}
               activeSection={activeSection}
-              onSectionChange={setActiveSection}
+              onSectionChange={(section: HistorySection) => setActiveSection(section)}
             />
 
             <div className="p-6">
@@ -226,11 +283,23 @@ const UserProfile = () => {
                                 Created: {itinerary.created_at ? format(new Date(itinerary.created_at), 'dd/MM/yy') : 'N/A'}
                               </p>
                             </div>
-                            <div className="text-right">
+                            <div className="text-right space-y-2">
                               <p className="font-bold text-dark-blue">{itinerary.budget}</p>
-                              <button className="bg-hot-pink text-black font-bold px-4 py-2 border-2 border-black hover:bg-dark-blue hover:text-white transition-colors mt-2">
-                                View Details
-                              </button>
+                              <div className="flex gap-2">
+                                <button 
+                                  onClick={() => handleViewItinerary(itinerary._id)}
+                                  className="bg-hot-pink text-black font-bold px-4 py-2 border-2 border-black hover:bg-dark-blue hover:text-white transition-colors"
+                                >
+                                  View Details
+                                </button>
+                                <button 
+                                  onClick={() => handleDeleteItinerary(itinerary._id)}
+                                  disabled={deleteItineraryMutation.isPending}
+                                  className="bg-red-500 text-white font-bold px-4 py-2 border-2 border-black hover:bg-red-600 transition-colors disabled:opacity-50"
+                                >
+                                  {deleteItineraryMutation.isPending ? 'Deleting...' : 'Delete'}
+                                </button>
+                              </div>
                             </div>
                           </div>
                           {itinerary.activities && (
@@ -251,6 +320,19 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
+        <ItineraryModal
+          isOpen={showItineraryModal}
+          onClose={() => {
+            setShowItineraryModal(false);
+            setSelectedItinerary(null);
+          }}
+          itinerary={selectedItinerary}
+        />
+
+        <PaywallModal
+          isOpen={showPaywallModal}
+          onClose={() => setShowPaywallModal(false)}
+        />
       </SignedIn>
     </div>
   );

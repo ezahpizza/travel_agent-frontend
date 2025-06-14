@@ -52,7 +52,7 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-neon-green font-syne">
+    <div className="min-h-screen bg-turquoise font-syne">
       <GlobalNavbar />
       
       <main className="p-6 md:p-12">
@@ -92,7 +92,7 @@ const ContactPage = () => {
                 </div>
               </div>
 
-              <div className="bg-white border-4 border-black p-6">
+              <div className="bg-brut-violet border-4 border-black p-6">
                 {isSubmitted ? (
                   <div className="text-center">
                     <div className="bg-brut-green border-4 border-black p-6 mb-4">
@@ -116,7 +116,7 @@ const ContactPage = () => {
                         value={formData.name}
                         onChange={handleInputChange}
                         required
-                        className="w-full border-4 border-black p-3 font-syne text-black bg-neon-cyan"
+                        className="w-full border-4 border-black p-3  text-black bg-turquoise-darkblue"
                         placeholder="Your name"
                       />
                     </div>
@@ -129,7 +129,7 @@ const ContactPage = () => {
                         value={formData.email}
                         onChange={handleInputChange}
                         required
-                        className="w-full border-4 border-black p-3 font-syne text-black bg-neon-cyan"
+                        className="w-full border-4 border-black p-3  text-black bg-turquoise-darkblue"
                         placeholder="your.email@example.com"
                       />
                     </div>
@@ -142,7 +142,7 @@ const ContactPage = () => {
                         value={formData.subject}
                         onChange={handleInputChange}
                         required
-                        className="w-full border-4 border-black p-3 font-syne text-black bg-neon-cyan"
+                        className="w-full border-4 border-black p-3  text-black bg-turquoise-darkblue"
                         placeholder="What's this about?"
                       />
                     </div>
@@ -155,7 +155,7 @@ const ContactPage = () => {
                         onChange={handleInputChange}
                         required
                         rows={5}
-                        className="w-full border-4 border-black p-3 font-syne text-black bg-neon-cyan resize-none"
+                        className="w-full border-4 border-black p-3 text-black bg-turquoise-darkblue resize-none"
                         placeholder="Tell us what's on your mind..."
                       />
                     </div>
@@ -166,7 +166,7 @@ const ContactPage = () => {
                       className={`w-full font-bold text-xl py-4 border-4 border-black transition-colors ${
                         isSubmitting 
                           ? 'bg-gray-400 text-gray-600' 
-                          : 'bg-hot-pink text-black hover:bg-flamingo'
+                          : 'bg-hot-pink text-black hover:bg-neon-green'
                       }`}
                     >
                       {isSubmitting ? 'Sending...' : 'Send Message'}
