@@ -52,9 +52,10 @@ const ContactPage = () => {
   };
 
 
-useEffect(() => {
+  useEffect(() => {
+    document.title = "Contact Us - Navite";
     window.scrollTo(0, 0);
-}, []);
+  }, []);
 
   return (
     <div className="min-h-screen bg-turquoise font-syne">

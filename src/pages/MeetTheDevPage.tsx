@@ -1,4 +1,12 @@
+import React, { useEffect } from 'react';
+
 const MeetTheDevPage = () => {
+
+   useEffect(() => {
+      document.title = "Meet the Developer - Navite";
+      window.scrollTo(0, 0);
+    }, []);
+    
   return (
     <div className="min-h-screen bg-brut-purple font-syne p-8">
       <div className="max-w-4xl mx-auto">

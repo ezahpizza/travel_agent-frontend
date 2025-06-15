@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 
-useEffect(() => {
-    window.scrollTo(0, 0);
-}, []);
-
 const PrivacyPolicyPage = () => {
+
+  useEffect(() => {
+    document.title = "Privacy Policy - Navite";
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="min-h-screen bg-flamingo font-syne p-8">
       <div className="max-w-4xl mx-auto">

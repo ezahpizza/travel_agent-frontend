@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 
-useEffect(() => {
-    window.scrollTo(0, 0);
-}, []);
-
 const TermsPage = () => {
+
+  useEffect(() => {
+    document.title = "Terms of Use - Navite";
+    window.scrollTo(0, 0);
+  }, []);
+  
   return (
     <div className="min-h-screen bg-turquoise-darkblue font-syne p-8">
       <div className="max-w-4xl mx-auto">
