@@ -1,3 +1,8 @@
+import React, { useEffect } from 'react';
+
+useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
 const TermsPage = () => {
   return (

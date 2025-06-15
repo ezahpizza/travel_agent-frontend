@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import GlobalNavbar from '@/components/GlobalNavbar';
@@ -50,6 +50,11 @@ const ContactPage = () => {
       setIsSubmitting(false);
     }
   };
+
+
+useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
   return (
     <div className="min-h-screen bg-turquoise font-syne">
