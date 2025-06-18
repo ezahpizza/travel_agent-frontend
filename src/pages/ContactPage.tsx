@@ -5,6 +5,13 @@ import { ArrowLeft } from 'lucide-react';
 import GlobalNavbar from '@/components/GlobalNavbar';
 
 const ContactPage = () => {
+
+  const WEB3FORMS_API_KEY = import.meta.env.VITE_WEB3FORMS_API_KEY as string;
+  if (!WEB3FORMS_API_KEY) {
+    console.error('WEB3FORMS_API_KEY is not defined');
+    return <div>Error: WEB3FORMS_API_KEY is not defined</div>;
+  }
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -33,7 +40,7 @@ const ContactPage = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: process.env.VITE_WEB3FORMS_ACCESS_KEY || 'c45e9500-a616-45cc-98ae-29f7154009c2',
+          access_key: WEB3FORMS_API_KEY,
           ...formData,
         }),
       });
