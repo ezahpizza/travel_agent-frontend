@@ -2,6 +2,7 @@
 import { createRoot } from 'react-dom/client'
 import { ClerkProvider } from '@clerk/clerk-react'
 import App from './App.tsx'
+import { neobrutalism } from '@clerk/themes'
 import './index.css'
 import { SubscriptionProvider } from './contexts/SubscriptionContext'
 
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
       clerkJSVersion="5.56.0-snapshot.v20250312225817"
 
       appearance={{
+            baseTheme: [neobrutalism],
             layout: {
               unsafe_disableDevelopmentModeWarnings: true,
             },
